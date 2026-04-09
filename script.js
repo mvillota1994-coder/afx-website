@@ -46,13 +46,14 @@
 
   // --- Scroll reveal with staggered timing ---
   var revealGroups = [
+    { selector: '.program-module', staggerMs: 100 },
     { selector: '.benefit-card', staggerMs: 80 },
     { selector: '.testimonial-card', staggerMs: 100 },
     { selector: '.pricing-card', staggerMs: 120 },
   ];
 
   var soloElements = document.querySelectorAll(
-    '.program-text, .program-visual, .mid-cta-inner, .section-title, .final-cta-inner'
+    '.program-bottom, .mid-cta-inner, .section-title, .final-cta-inner'
   );
 
   soloElements.forEach(function (el) {
@@ -108,34 +109,6 @@
       groupObserver.observe(el);
     });
   });
-
-  // --- Animated progress bars in visual card ---
-  var visualCard = document.querySelector('.visual-card');
-  if (visualCard) {
-    var barFills = visualCard.querySelectorAll('.vs-fill');
-    var barObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            barFills.forEach(function (fill) {
-              var targetWidth = fill.style.width;
-              fill.style.width = '0%';
-              // Trigger reflow then animate
-              requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                  fill.style.width = targetWidth;
-                  fill.classList.add('animated');
-                });
-              });
-            });
-            barObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    barObserver.observe(visualCard);
-  }
 
   // --- Smooth scroll for anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
